@@ -33,11 +33,10 @@
     .nav-links a:hover::after { transform:scaleX(1); }
     .nav-toggle { display:none; flex-direction:column; gap:5px; cursor:none; background:none; border:none; padding:4px; }
     .nav-toggle span { display:block; width:22px; height:1px; background:var(--text); transition:all .3s; }
-
     #hero { min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:0 56px 80px; position:relative; overflow:hidden; }
-    #particle-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+    #webgl-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
     .hero-content { position:relative; z-index:1; }
-    .hero-bg-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:var(--font-display); font-size:clamp(80px,18vw,220px); letter-spacing:-4px; color:transparent; -webkit-text-stroke:1px var(--border); white-space:nowrap; pointer-events:none; user-select:none; opacity:.6; z-index:0; }
+    .hero-bg-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:var(--font-display); font-size:clamp(80px,18vw,220px); letter-spacing:-4px; color:transparent; -webkit-text-stroke:1px var(--border); white-space:nowrap; pointer-events:none; user-select:none; opacity:.4; z-index:0; }
     .hero-line { position:absolute; top:0; bottom:0; left:56px; width:1px; background:linear-gradient(to bottom,transparent,var(--red),transparent); opacity:.4; z-index:1; }
     .typing-wrap { font-size:13px; color:var(--muted); margin-bottom:16px; min-height:20px; }
     .typing-text { color:var(--red); }
@@ -48,9 +47,6 @@
     .hero-bottom { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px; opacity:0; animation:fadeUp .6s ease forwards .6s; }
     .hero-bio { max-width:480px; color:var(--muted); font-size:13px; line-height:1.9; border-left:2px solid var(--red); padding-left:20px; }
     .hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
-    .scroll-hint { position:absolute; bottom:32px; right:56px; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted2); writing-mode:vertical-rl; display:flex; align-items:center; gap:10px; z-index:1; }
-    .scroll-hint::before { content:''; display:block; width:1px; height:48px; background:var(--red); opacity:.5; }
-
     .btn { padding:13px 26px; font-family:var(--font-body); font-size:11px; letter-spacing:.15em; text-transform:uppercase; text-decoration:none; border-radius:0; transition:all .2s; cursor:none; border:none; display:inline-block; }
     .btn-primary { background:var(--red); color:#fff; font-weight:500; }
     .btn-primary:hover { background:var(--red-dim); transform:translateY(-2px); }
@@ -95,35 +91,25 @@
     .cert-desc { font-size:13px; color:var(--muted); line-height:1.8; }
     .cert-score { margin-top:18px; display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-size:28px; letter-spacing:1px; color:var(--red); }
     .cert-score-label { font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; align-self:flex-end; margin-bottom:4px; }
-
     #projects { background:var(--bg2); }
     .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:2px; }
-    .flip-card { height:320px; perspective:1000px; }
-    .flip-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.4,0,.2,1); }
-    .flip-card:hover .flip-inner { transform:rotateY(180deg); }
-    .flip-front,.flip-back { position:absolute; inset:0; backface-visibility:hidden; padding:36px 32px; display:flex; flex-direction:column; }
-    .flip-front { background:var(--bg3); border:1px solid var(--border); }
-    .flip-back { background:var(--red); transform:rotateY(180deg); justify-content:center; }
-    .flip-card:hover .flip-front { border-color:var(--red); }
-    .tilt-card { background:var(--bg3); border:1px solid var(--border); padding:36px 32px; display:flex; flex-direction:column; transition:border-color .2s; transform-style:preserve-3d; position:relative; overflow:hidden; }
-    .tilt-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform .3s ease; }
-    .tilt-card:hover::after { transform:scaleX(1); }
-    .tilt-card:hover { border-color:var(--red); }
-    .project-num { font-family:var(--font-display); font-size:56px; line-height:1; color:var(--border); margin-bottom:16px; }
+    .project-card-3d { position:relative; background:var(--bg3); border:1px solid var(--border); padding:36px 32px; display:flex; flex-direction:column; transform-style:preserve-3d; transition:border-color .3s; overflow:hidden; }
+    .project-card-3d::before { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(232,19,42,0.15) 0%,transparent 70%); pointer-events:none; transform:translate(-50%,-50%); left:var(--mx,50%); top:var(--my,50%); opacity:0; transition:opacity .3s; z-index:0; }
+    .project-card-3d::after { content:''; position:absolute; top:0; left:-100%; width:60px; height:100%; background:linear-gradient(90deg,transparent,rgba(232,19,42,0.08),transparent); transition:left .6s ease; z-index:0; }
+    .project-card-3d:hover::before { opacity:1; }
+    .project-card-3d:hover::after { left:150%; }
+    .project-card-3d:hover { border-color:var(--red); }
+    .project-card-3d > * { position:relative; z-index:1; }
+    .project-num { font-family:var(--font-display); font-size:56px; line-height:1; color:var(--border); margin-bottom:16px; transition:color .3s; }
+    .project-card-3d:hover .project-num { color:rgba(232,19,42,0.3); }
     .project-tag { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
     .project-title { font-family:var(--font-display); font-size:26px; letter-spacing:1px; margin-bottom:14px; line-height:1.1; }
     .project-desc { font-size:13px; color:var(--muted); line-height:1.8; flex:1; margin-bottom:24px; }
-    .flip-back .project-title { color:#fff; }
-    .flip-back .project-desc { color:rgba(255,255,255,.85); }
-    .flip-back .project-tag { color:rgba(255,255,255,.7); }
-    .flip-back .project-num { color:rgba(255,255,255,.15); }
     .project-tech { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
-    .tech-pill { font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--border); color:var(--muted); padding:4px 10px; }
-    .flip-back .tech-pill { border-color:rgba(255,255,255,.3); color:rgba(255,255,255,.8); }
+    .tech-pill { font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--border); color:var(--muted); padding:4px 10px; transition:all .2s; }
+    .project-card-3d:hover .tech-pill { border-color:var(--red); color:var(--text); }
     .project-link { font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); text-decoration:none; display:flex; align-items:center; gap:8px; transition:gap .2s; }
     .project-link:hover { gap:14px; }
-    .flip-back .project-link { color:#fff; }
-
     #contact { background:var(--bg); }
     .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
     .contact-tagline { font-family:var(--font-display); font-size:clamp(28px,4vw,48px); letter-spacing:2px; line-height:1.1; margin-bottom:24px; }
@@ -156,13 +142,12 @@
       .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 0}
       .nav-links.open{display:flex} .nav-links li{padding:12px 24px}
       .nav-toggle{display:flex} #hero{padding:100px 24px 60px}
-      .hero-bg-text{display:none} .scroll-hint{display:none}
+      .hero-bg-text{display:none}
       section{padding:72px 24px} .about-layout{grid-template-columns:1fr;gap:48px}
       .skill-row{grid-template-columns:1fr 1fr 40px}
       .contact-layout{grid-template-columns:1fr;gap:48px}
       .form-row{grid-template-columns:1fr}
       footer{flex-direction:column;text-align:center;padding:24px}
-      .flip-card{height:auto} .flip-inner{transform:none!important} .flip-front{position:relative} .flip-back{display:none}
     }
   </style>
 </head>
@@ -186,7 +171,7 @@
   </nav>
 
   <section id="hero">
-    <canvas id="particle-canvas"></canvas>
+    <canvas id="webgl-canvas"></canvas>
     <div class="hero-line"></div>
     <div class="hero-bg-text">RAHUL</div>
     <div class="hero-content">
@@ -200,7 +185,6 @@
         </div>
       </div>
     </div>
-    <div class="scroll-hint">Scroll down</div>
   </section>
 
   <section id="about">
@@ -208,9 +192,9 @@
     <h2 class="section-title reveal">Who I Am</h2>
     <div class="about-layout">
       <div class="about-text reveal">
-        <p>I'm <strong>Pattepu Teja Rahul</strong>, a Computer Science student at <strong>Anil Neerukonda Institute of Technology and Sciences (ANITS)</strong>, Visakhapatnam, Andhra Pradesh.</p>
-        <p>I specialise in <strong>Java development</strong> with a deep interest in backend systems, data structures, and building applications that scale. I write clean, efficient code that solves real problems.</p>
-        <p>Currently expanding into <strong>full-stack web development</strong> through hands-on internship projects with Future Interns — building real products, not just tutorials.</p>
+        <p>I'm <strong>Pattepu Teja Rahul</strong> — a Computer Science student at <strong>ANITS, Visakhapatnam</strong> who genuinely enjoys writing code that does something useful in the real world.</p>
+        <p>Java is where I started and where I feel most at home. I like the way it forces you to think clearly — about structure, about logic, about what happens when things go wrong. That mindset carries into everything I build.</p>
+        <p>Right now I'm pushing myself into <strong>full-stack web development</strong> through a live internship with Future Interns. Not following tutorials — actually building and shipping things. That difference matters to me.</p>
         <a href="#contact" class="btn btn-outline">Download Resume →</a>
       </div>
       <div class="stats-list reveal">
@@ -312,31 +296,20 @@
     <h2 class="section-title reveal">Things I've Built</h2>
     <div class="projects-grid">
 
-      <div class="flip-card reveal">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <div class="project-num">01</div>
-            <div class="project-tag">Full Stack · HTML/CSS/JS · Live Project</div>
-            <h3 class="project-title">Personal Portfolio Website</h3>
-            <p class="project-desc">A responsive dark-themed developer portfolio. Hover to flip and see more!</p>
-            <div class="project-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">JavaScript</span></div>
-          </div>
-          <div class="flip-back">
-            <div class="project-num">01</div>
-            <div class="project-tag">Full Stack · Live Project</div>
-            <h3 class="project-title">Personal Portfolio</h3>
-            <p class="project-desc">Built from scratch with 3D particle background, custom cursor, scroll animations, certifications and mobile-first responsive design.</p>
-            <div class="project-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">JS</span><span class="tech-pill">Three.js</span></div>
-            <a href="https://patteputejarahul1234-max.github.io/FUTURE_FS_01/" class="project-link">View Live →</a>
-          </div>
-        </div>
+      <div class="project-card-3d reveal">
+        <div class="project-num">01</div>
+        <div class="project-tag">Full Stack · HTML/CSS/JS · Live Project</div>
+        <h3 class="project-title">Personal Portfolio Website</h3>
+        <p class="project-desc">Started with zero web dev knowledge. Spent a week learning HTML, CSS and JavaScript — then built this from scratch. It's live, it works, and I'm proud of how it turned out. Built it to actually get jobs, not just to submit a task.</p>
+        <div class="project-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Three.js</span></div>
+        <a href="https://patteputejarahul1234-max.github.io/FUTURE_FS_01/" class="project-link">View Live →</a>
       </div>
 
-      <div class="tilt-card reveal">
+      <div class="project-card-3d reveal">
         <div class="project-num">02</div>
         <div class="project-tag">Java · Tracker · Personal Project</div>
         <h3 class="project-title">Study Tracker</h3>
-        <p class="project-desc">A Java-based study tracker application to manage and monitor study sessions, track progress and stay consistent with learning goals through efficient data handling.</p>
+        <p class="project-desc">Built this because I actually needed it. Tracking study sessions manually wasn't working — so I wrote a Java app to do it properly. It manages sessions, tracks time and keeps your progress logged. Real problem, real solution.</p>
         <div class="project-tech"><span class="tech-pill">Java</span><span class="tech-pill">OOP</span><span class="tech-pill">File I/O</span></div>
         <a href="https://github.com/patteputejarahul1234-max/study-tracker-java" class="project-link">View on GitHub →</a>
       </div>
@@ -350,7 +323,7 @@
     <div class="contact-layout">
       <div class="reveal">
         <p class="contact-tagline">Got an idea?<br>Let's <span>build it.</span></p>
-        <p class="contact-info-text">Open to internship opportunities, collaborations and interesting projects. I usually reply within 24 hours.</p>
+        <p class="contact-info-text">I'm currently open to internship opportunities and collaborations. If you have something interesting — a project, an idea, or just want to connect — drop me a message. I check my email every day and I actually reply.</p>
         <div class="contact-items">
           <a href="mailto:pattepu.tejarahul1234@gmail.com" class="contact-item"><span class="contact-item-icon">@</span>pattepu.tejarahul1234@gmail.com</a>
           <a href="https://github.com/patteputejarahul1234-max" target="_blank" class="contact-item"><span class="contact-item-icon">GH</span>github.com/patteputejarahul1234-max</a>
@@ -381,69 +354,114 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    
     const cursor=document.getElementById('cursor');
     const ring=document.getElementById('cursor-ring');
     let mx=0,my=0,rx=0,ry=0;
     document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
     function animateCursor(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateCursor);}
     animateCursor();
-    document.querySelectorAll('a,button,.tilt-card,.flip-card,.cert-card,.skill-row,.stat-row').forEach(el=>{
+    document.querySelectorAll('a,button,.project-card-3d,.cert-card,.skill-row,.stat-row').forEach(el=>{
       el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='54px';ring.style.height='54px';ring.style.opacity='0.8';});
       el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5';});
     });
-
     const toggle=document.getElementById('nav-toggle');
     const navLinks=document.getElementById('nav-links');
     toggle.addEventListener('click',()=>navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
-
     const words=['Java Developer','Full Stack Developer','Problem Solver','CS Student @ ANITS','Code Enthusiast'];
     let wi=0,ci=0,deleting=false;
     const typEl=document.getElementById('typing');
     function type(){const word=words[wi];if(!deleting){typEl.textContent=word.slice(0,++ci);if(ci===word.length){deleting=true;setTimeout(type,1800);return;}}else{typEl.textContent=word.slice(0,--ci);if(ci===0){deleting=false;wi=(wi+1)%words.length;}}setTimeout(type,deleting?60:100);}
     type();
-    
-    const canvas=document.getElementById('particle-canvas');
-    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+    const canvas=document.getElementById('webgl-canvas');
     const hero=document.getElementById('hero');
+    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
     renderer.setSize(hero.offsetWidth,hero.offsetHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
     const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(75,hero.offsetWidth/hero.offsetHeight,0.1,1000);
-    camera.position.z=5;
-    const geo=new THREE.BufferGeometry();
-    const count=1200;
-    const pos=new Float32Array(count*3);
-    const col=new Float32Array(count*3);
-    for(let i=0;i<count*3;i+=3){pos[i]=(Math.random()-.5)*24;pos[i+1]=(Math.random()-.5)*24;pos[i+2]=(Math.random()-.5)*24;const isRed=Math.random()>.65;col[i]=isRed?.91:.25;col[i+1]=isRed?.07:.25;col[i+2]=isRed?.16:.25;}
-    geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-    geo.setAttribute('color',new THREE.BufferAttribute(col,3));
-    const mat=new THREE.PointsMaterial({size:.055,vertexColors:true,transparent:true,opacity:.85});
-    const points=new THREE.Points(geo,mat);
-    scene.add(points);
-    let pmx=0,pmy=0;
-    document.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*.6;pmy=(e.clientY/window.innerHeight-.5)*.6;});
-    function animateParticles(){requestAnimationFrame(animateParticles);points.rotation.y+=.0008;points.rotation.x+=.0003;camera.position.x+=(pmx-camera.position.x)*.04;camera.position.y+=(-pmy-camera.position.y)*.04;camera.lookAt(scene.position);renderer.render(scene,camera);}
-    animateParticles();
+    const camera=new THREE.PerspectiveCamera(60,hero.offsetWidth/hero.offsetHeight,0.1,100);
+    camera.position.set(0,0,8);
+    const gridGroup=new THREE.Group();
+    scene.add(gridGroup);
+    for(let i=-8;i<=8;i++){
+      const pts=[];
+      for(let j=-20;j<=20;j++) pts.push(new THREE.Vector3(j*.5,i*.4,0));
+      const geo=new THREE.BufferGeometry().setFromPoints(pts);
+      const color=Math.abs(i)<2?0xe8132a:(Math.abs(i)<5?0x440a10:0x1e1e1e);
+      const opacity=Math.abs(i)<2?.6:(Math.abs(i)<5?.3:.12);
+      gridGroup.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color,transparent:true,opacity})));
+    }
+    for(let i=-20;i<=20;i++){
+      const pts=[];
+      for(let j=-8;j<=8;j++) pts.push(new THREE.Vector3(i*.5,j*.4,0));
+      const geo=new THREE.BufferGeometry().setFromPoints(pts);
+      gridGroup.add(new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x1a1a1a,transparent:true,opacity:.1})));
+    }
+    const orbs=[];
+    const orbGeo=new THREE.SphereGeometry(.06,8,8);
+    for(let i=0;i<40;i++){
+      const bright=Math.random()>.6;
+      const orb=new THREE.Mesh(orbGeo,new THREE.MeshBasicMaterial({color:bright?0xe8132a:0x440a10,transparent:true,opacity:bright?.9:.4}));
+      orb.position.set((Math.random()-.5)*18,(Math.random()-.5)*7,(Math.random()-.5)*4);
+      orb.userData={ox:orb.position.x,oy:orb.position.y,phase:Math.random()*Math.PI*2,amp:.3+Math.random()*.5};
+      scene.add(orb); orbs.push(orb);
+    }
+    const ring3d=new THREE.Mesh(new THREE.TorusGeometry(2.5,.015,8,120),new THREE.MeshBasicMaterial({color:0xe8132a,transparent:true,opacity:.25}));
+    scene.add(ring3d);
+    const ring2=new THREE.Mesh(new THREE.TorusGeometry(4,.008,8,120),new THREE.MeshBasicMaterial({color:0xe8132a,transparent:true,opacity:.12}));
+    scene.add(ring2);
+
+    let mouseX3d=0,mouseY3d=0;
+    document.addEventListener('mousemove',e=>{mouseX3d=(e.clientX/window.innerWidth-.5)*2;mouseY3d=-(e.clientY/window.innerHeight-.5)*2;});
+
+    let time=0;
+    function animateScene(){
+      requestAnimationFrame(animateScene); time+=.008;
+      gridGroup.rotation.x=Math.sin(time*.3)*.08+mouseY3d*.04;
+      gridGroup.rotation.y=Math.cos(time*.2)*.06+mouseX3d*.04;
+      gridGroup.position.z=Math.sin(time*.4)*.3;
+      orbs.forEach(orb=>{
+        orb.position.x=orb.userData.ox+Math.sin(time*.5+orb.userData.phase)*orb.userData.amp;
+        orb.position.y=orb.userData.oy+Math.cos(time*.4+orb.userData.phase)*orb.userData.amp*.7;
+        orb.material.opacity=.3+Math.abs(Math.sin(time*.8+orb.userData.phase))*.6;
+      });
+      ring3d.rotation.z=time*.15;
+      ring3d.rotation.x=Math.sin(time*.2)*.3+mouseY3d*.1;
+      ring3d.rotation.y=mouseX3d*.1;
+      ring2.rotation.z=-time*.08;
+      ring2.rotation.x=mouseY3d*.05;
+      camera.position.x+=(mouseX3d*.5-camera.position.x)*.03;
+      camera.position.y+=(mouseY3d*.3-camera.position.y)*.03;
+      camera.lookAt(scene.position);
+      renderer.render(scene,camera);
+    }
+    animateScene();
     window.addEventListener('resize',()=>{renderer.setSize(hero.offsetWidth,hero.offsetHeight);camera.aspect=hero.offsetWidth/hero.offsetHeight;camera.updateProjectionMatrix();});
-
-    document.querySelectorAll('.tilt-card').forEach(card=>{
-      card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=e.clientX-r.left,y=e.clientY-r.top;const cx=r.width/2,cy=r.height/2;const rx2=(y-cy)/cy*-14;const ry2=(x-cx)/cx*14;card.style.transform=`perspective(700px) rotateX(${rx2}deg) rotateY(${ry2}deg) scale(1.04)`;});
-      card.addEventListener('mouseleave',()=>{card.style.transform='perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)';});
+    document.querySelectorAll('.project-card-3d').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=e.clientX-r.left, y=e.clientY-r.top;
+        const cx=r.width/2, cy=r.height/2;
+        const rotX=(y-cy)/cy*-10;
+        const rotY=(x-cx)/cx*10;
+        card.style.transform=`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03) translateZ(10px)`;
+        card.style.setProperty('--mx',x+'px');
+        card.style.setProperty('--my',y+'px');
+        card.style.boxShadow=`0 0 40px rgba(232,19,42,0.08), ${(x-cx)*.02}px ${(y-cy)*.02}px 30px rgba(232,19,42,0.05)`;
+      });
+      card.addEventListener('mouseleave',()=>{
+        card.style.transform='perspective(800px) rotateX(0deg) rotateY(0deg) scale(1) translateZ(0px)';
+        card.style.boxShadow='none';
+      });
     });
-
     const reveals=document.querySelectorAll('.reveal');
     const revealObs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);revealObs.unobserve(e.target);}});},{threshold:0.1});
     reveals.forEach(el=>revealObs.observe(el));
-
     const barObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.skill-bar-fill').forEach(b=>{b.style.width=b.dataset.width+'%';});barObs.unobserve(e.target);}});},{threshold:0.3});
     document.querySelectorAll('.skill-row').forEach(r=>barObs.observe(r));
-
     const secs=document.querySelectorAll('section[id]');
     const anchors=document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll',()=>{let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});anchors.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--red)':'';});});
-
     function handleSubmit(e){e.preventDefault();const btn=document.getElementById('submit-btn');btn.textContent='Message Sent ✓';btn.style.background='#1a1a1a';btn.style.border='1px solid var(--red)';btn.style.color='var(--red)';setTimeout(()=>{btn.textContent='Send Message →';btn.style.background='';btn.style.border='';btn.style.color='';e.target.reset();},3000);}
   </script>
 </body>
