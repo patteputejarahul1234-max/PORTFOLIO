@@ -188,66 +188,66 @@
       transition:all .2s; border-radius:4px;
     }
     .hero-social:hover { border-color:var(--amber); color:var(--amber); background:var(--amber-glow); }
-.hero-right { display:flex; justify-content:center; align-items:center; position:relative; z-index:1; }
-.profile-wrap {
-  position:relative;
-  width:340px; height:420px;
-}
-.profile-img-box {
-  width:280px; height:340px;
-  border-radius:12px;
-  overflow:hidden;
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  border:1px solid var(--border);
-}
-.profile-img-box img {
-  width:100%; height:100%;
-  object-fit:cover;
-  object-position:center top;
-  filter:grayscale(20%) contrast(1.05);
-  transition:filter .3s;
-}
-.profile-img-box:hover img { filter:grayscale(0%) contrast(1.1); }
-.profile-img-box::after {
-  content:'';
-  position:absolute; inset:0;
-  background:linear-gradient(180deg, transparent 50%, rgba(245,158,11,0.15) 100%);
-  pointer-events:none;
-}
-.profile-badge {
-  position:absolute;
-  bottom:20px; right:-20px;
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:12px 16px;
-  font-size:11px; color:var(--muted);
-  letter-spacing:0.05em;
-  white-space:nowrap;
-}
-.profile-badge strong { display:block; color:var(--amber); font-size:18px; font-family:var(--font-display); font-weight:700; }
-.profile-badge-2 {
-  position:absolute;
-  top:10px; left:-30px;
-  background:var(--amber);
-  border-radius:6px;
-  padding:10px 14px;
-  font-size:10px; color:#000;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  font-weight:600;
-  white-space:nowrap;
-}
-.profile-ring {
-  position:absolute; inset:-20px;
-  border-radius:16px;
-  border:1px dashed var(--border);
-  animation:rotateRing 20s linear infinite;
-  pointer-events:none;
-}
-@keyframes rotateRing { to { transform:rotate(360deg); } }
+    .hero-right { display:flex; justify-content:center; align-items:center; position:relative; z-index:1; }
+    .profile-wrap {
+      position:relative;
+      width:340px; height:420px;
+    }
+    .profile-img-box {
+      width:280px; height:340px;
+      border-radius:12px;
+      overflow:hidden;
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      border:1px solid var(--border);
+    }
+    .profile-img-box img {
+      width:100%; height:100%;
+      object-fit:cover;
+      object-position:center top;
+      filter:grayscale(20%) contrast(1.05);
+      transition:filter .3s;
+    }
+    .profile-img-box:hover img { filter:grayscale(0%) contrast(1.1); }
+    .profile-img-box::after {
+      content:'';
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, transparent 50%, rgba(245,158,11,0.15) 100%);
+      pointer-events:none;
+    }
+    .profile-badge {
+      position:absolute;
+      bottom:20px; right:-20px;
+      background:var(--bg2);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:12px 16px;
+      font-size:11px; color:var(--muted);
+      letter-spacing:0.05em;
+      white-space:nowrap;
+    }
+    .profile-badge strong { display:block; color:var(--amber); font-size:18px; font-family:var(--font-display); font-weight:700; }
+    .profile-badge-2 {
+      position:absolute;
+      top:10px; left:-30px;
+      background:var(--amber);
+      border-radius:6px;
+      padding:10px 14px;
+      font-size:10px; color:#000;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-weight:600;
+      white-space:nowrap;
+    }
+    .profile-ring {
+      position:absolute; inset:-20px;
+      border-radius:16px;
+      border:1px dashed var(--border);
+      animation:rotateRing 20s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes rotateRing { to { transform:rotate(360deg); } }
     #about { padding:110px 56px; background:var(--bg2); }
     .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
     .about-label { font-size:11px; letter-spacing:0.2em; color:var(--amber); text-transform:uppercase; margin-bottom:16px; }
@@ -416,7 +416,7 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
   <nav>
-    <a href="#hero" class="nav-logo">Tejarahul</a>
+    <a href="#hero" class="nav-logo">PTR<span>.</span></a>
     <ul class="nav-links" id="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -434,7 +434,7 @@
         <span class="hero-status-dot"></span>
         Available for Internships &amp; Projects
       </div>
-      <p class="hero-greeting">👋 Hi, my name is</p>
+      <p class="hero-greeting">// Hi, my name is</p>
       <h1 class="hero-name">Pattepu<br><span class="amber">Teja Rahul</span></h1>
       <p class="hero-role">
         Java Developer &amp; Full Stack Intern at Future Interns.<br>
@@ -456,6 +456,7 @@
       </div>
     </div>
   </section>
+  <section id="about">
     <div class="about-grid">
       <div class="reveal">
         <div class="about-label">01 — About Me</div>
