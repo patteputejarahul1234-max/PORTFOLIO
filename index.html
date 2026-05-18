@@ -188,70 +188,66 @@
       transition:all .2s; border-radius:4px;
     }
     .hero-social:hover { border-color:var(--amber); color:var(--amber); background:var(--amber-glow); }
-.hero-right {
-  position:absolute;
-  right:0; top:0; bottom:0;
-  width:48%;
-  overflow:hidden;
-  pointer-events:auto;
-}
+.hero-right { display:flex; justify-content:center; align-items:center; position:relative; z-index:1; }
 .profile-wrap {
-  width:100%; height:100%;
   position:relative;
-  cursor:none;
+  width:340px; height:420px;
 }
 .profile-img-box {
-  width:100%; height:100%;
-  position:relative;
+  width:280px; height:340px;
+  border-radius:12px;
   overflow:hidden;
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  border:1px solid var(--border);
 }
 .profile-img-box img {
   width:100%; height:100%;
   object-fit:cover;
   object-position:center top;
-  filter:grayscale(100%) brightness(0.6) contrast(1.1);
-  transition:filter 0.8s ease;
-  display:block;
-  transform:scale(1.08);
+  filter:grayscale(20%) contrast(1.05);
+  transition:filter .3s;
 }
-.profile-img-box:hover img {
-  filter:grayscale(0%) brightness(0.95) contrast(1.05);
-}
-.profile-img-box::before {
-  content:'';
-  position:absolute; inset:0;
-  background:linear-gradient(
-    90deg,
-    var(--bg) 0%,
-    rgba(8,8,8,0.6) 25%,
-    transparent 55%
-  );
-  z-index:1;
-  pointer-events:none;
-}
+.profile-img-box:hover img { filter:grayscale(0%) contrast(1.1); }
 .profile-img-box::after {
   content:'';
   position:absolute; inset:0;
-  background:linear-gradient(
-    180deg,
-    rgba(8,8,8,0.5) 0%,
-    transparent 20%,
-    transparent 70%,
-    var(--bg) 100%
-  );
-  z-index:1;
+  background:linear-gradient(180deg, transparent 50%, rgba(245,158,11,0.15) 100%);
   pointer-events:none;
 }
-.profile-wrap:hover .profile-img-box::after {
-  background:linear-gradient(
-    180deg,
-    rgba(8,8,8,0.3) 0%,
-    transparent 20%,
-    transparent 60%,
-    rgba(245,158,11,0.08) 85%,
-    var(--bg) 100%
-  );
+.profile-badge {
+  position:absolute;
+  bottom:20px; right:-20px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px 16px;
+  font-size:11px; color:var(--muted);
+  letter-spacing:0.05em;
+  white-space:nowrap;
 }
+.profile-badge strong { display:block; color:var(--amber); font-size:18px; font-family:var(--font-display); font-weight:700; }
+.profile-badge-2 {
+  position:absolute;
+  top:10px; left:-30px;
+  background:var(--amber);
+  border-radius:6px;
+  padding:10px 14px;
+  font-size:10px; color:#000;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-weight:600;
+  white-space:nowrap;
+}
+.profile-ring {
+  position:absolute; inset:-20px;
+  border-radius:16px;
+  border:1px dashed var(--border);
+  animation:rotateRing 20s linear infinite;
+  pointer-events:none;
+}
+@keyframes rotateRing { to { transform:rotate(360deg); } }
     #about { padding:110px 56px; background:var(--bg2); }
     .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
     .about-label { font-size:11px; letter-spacing:0.2em; color:var(--amber); text-transform:uppercase; margin-bottom:16px; }
@@ -454,11 +450,9 @@
         <a href="mailto:pattepu.tejarahul1234@gmail.com" class="hero-social">@</a>
       </div>
     </div>
-        <div class="hero-right">
-      <div class="profile-wrap" id="parallax-img">
-        <div class="profile-img-box">
-          <img src="data:image/jpeg;base64,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
-  <section id="about">
+       <div class="hero-right">
+      <div class="parallax-wrap" id="parallax-img">
+        <img src="data:image/jpeg;base64,/9j/4AAQ
     <div class="about-grid">
       <div class="reveal">
         <div class="about-label">01 — About Me</div>
